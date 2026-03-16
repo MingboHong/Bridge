@@ -1,53 +1,33 @@
-# Markdown (H1)
+# Overview
 
-The render result of `md.mdx` is here.
+Bridge is a basis-driven causal inference framework for domain generalization in object detection. It targets spurious correlations induced by confounders (e.g., illumination, co-occurrence, style) when training on limited single-source data. By blocking confounders through a causal mechanism, Bridge improves robustness across both discriminative and generative Vision Foundation Models (VFMs).
 
-## Good (H2)
+![Teaser. Gradient responses of the detector for confounder analysis.](./bridge/heatmap.png)
 
-### Nice (H3)
+# Method Overview
 
-[**Diffusion models**](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/) are a class of generative models in machine learning that have gained significant attention in recent years. 
+We keep the implementation details minimal here and focus on the structure.
 
-**Text-to-image diffusion models** have various application scenarios, including:
+- Multi-scale features are extracted from a frozen VFM backbone.
+- A Causal Basis Block (CBB) calibrates features via a front-door adjustment perspective in a low-rank basis space.
+- Calibrated features are fed into task-specific heads for prediction.
 
-- **Art & Design**: Used by artists for creative art and fashion designers to generate clothing renderings.
-- **Advertising & Marketing**: Helps in creating advertising posters and product promotion maps.
-- **Game & Film**: Applied in game scene and character design, as well as film and television concept design...
+![Overview of Bridge. Multi-scale features are extracted from a VFM, calibrated by the Causal Basis Block (CBB), and fed into task-specific heads.](./bridge/pipeline.png)
 
-> Thegeneral training steps of diffusion models are as follows:
+# Qualitative Results
 
-1. Data collection
-2. Noise addition
-3. Model building
-4. Training
-5. Evaluation
-6. Deployment
+![Visualization results across benchmarks. (a) Baseline DINOv3 detector. (b) Bridge. Best viewed zoomed in.](./bridge/visualization.png)
 
+# UAV Dataset Visualizations (Supplementary)
 
-```
-import torch 
+![RGB histograms under varying conditions: clear, dark, foggy, and extreme dark.](./bridge/hist_drone.png)
 
-def denoise():
-    pass
-```
+![Examples of different weather conditions in DroneVehicle. Bottom row shows enhanced extreme-dark images for illustration only.](./bridge/drone_images.png)
 
-* [ ] to do
-* [x] done
-* [x] ~114514~
+# Quantitative Results
 
-![](./logo_vision_aigc.png)
+All quantitative tables are available in the paper and supplementary material. The project page focuses on the method overview and qualitative evidence.
 
-Lift ($$L$$) can be determined by Lift Coefficient ($$C_L$$) like the following
-equation.
+# Conclusion
 
-$$
-L = \frac{1}{2} \rho v^2 S C_L
-$$
-
-
-### Table (H3)
-
-| a       | b       | c     |  d      |
-| -       | :-      | -:    | :-:     |
-| Alpha   | Bravo   | Alpha | Bravo   |
-| 中文    | Charlie | 👩‍❤️‍👩    | Delta   |
+Bridge integrates causal inference into VFM-based DGOD with a lightweight, plug-and-play module. Across ground-level and aerial benchmarks, varied weather, and visual styles, it consistently improves robustness and generalization. The new weather-annotated UAV benchmark and supplemental analyses further broaden DG evaluation in remote sensing.

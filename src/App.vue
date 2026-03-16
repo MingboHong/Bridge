@@ -108,6 +108,8 @@ a:hover {
 
 p > img {
   width: 80%;
+  max-width: 100%;
+  height: auto;
   display: block;
   margin: 0 auto;
   border-radius: 10px;

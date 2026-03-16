@@ -3,32 +3,16 @@
 import { ElIcon } from 'element-plus'
 import { HomeFilled, SuccessFilled } from '@element-plus/icons-vue'
 
-// 个人主页
-const home = {
-    name: "My Blog",
-    link: "https://junyaohu.github.io/",
-}
-
 // 项目主页
-const logo = {
-    name: "Template",
+const home = {
+    name: "Bridge Project Page",
     link: "#",
 }
 
-// 右侧更多菜单
-const more_paper = {
-    "ExtDM": {
-        name: "ExtDM - CVPR 2024",
-        link: "https://zzcheng.top/ExtDM/",
-    },
-    "MPOT": {
-        name: "MPOT - ICCV 2023",
-        link: "https://zzcheng.top/MPOT/",
-    },
-    "ControlNet": {
-        name: "ControlNet - ICCV 2023",
-        link: "https://github.com/lllyasviel/ControlNet",
-    }
+// 会议信息
+const logo = {
+    name: "CVPR 2026",
+    link: "#",
 }
 
 </script>
@@ -55,20 +39,6 @@ const more_paper = {
             <el-icon :size="20"><SuccessFilled /></el-icon>
             <a :href=logo.link>{{ logo.name }} </a>
         </el-menu-item>
-
-        <!-- 更多栏目 -->
-        <el-sub-menu index="2">
-            <template #title>More</template>
-            <el-menu-item index="2-1">
-                <a :href=more_paper.ExtDM.link>{{ more_paper.ExtDM.name }}</a>
-            </el-menu-item>
-            <el-menu-item index="2-2">
-                <a :href=more_paper.MPOT.link>{{ more_paper.MPOT.name }}</a>
-            </el-menu-item>
-            <el-menu-item index="2-3">
-                <a :href=more_paper.ControlNet.link>{{ more_paper.ControlNet.name }}</a>
-            </el-menu-item>
-        </el-sub-menu>
 
     </el-menu>
     </el-affix>

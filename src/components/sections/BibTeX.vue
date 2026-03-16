@@ -3,11 +3,11 @@ export default {
   data() {
     return {
       bibtex: [
-        "@article{junyaohu2023template,",
-        "    title={Academic Project Page Template Vue},",
-        "    author={Hu, Junyao},",
-        "    journal={GitHub},",
-        "    year={2023}",
+        "@inproceedings{hong2026bridge,",
+        "    title={Bridge: Basis-Driven Causal Inference Marries VFMs for Domain Generalization},",
+        "    author={Hong, Mingbo and Second Author},",
+        "    booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},",
+        "    year={2026}",
         "}",
       ],
     }
