@@ -1,0 +1,29 @@
+\begin{table}[htbp]
+\centering
+\caption{Generalization comparison across different detectors on five datasets.  Best values are in \textbf{boldface}.}
+\vspace{-4pt}
+\label{tab:generalization_detectors}
+\footnotesize
+\begin{tabularx}{\linewidth}{
+>{\raggedright\arraybackslash}X |
+>{\centering\arraybackslash}p{0.6cm} |
+>{\centering\arraybackslash}p{0.6cm} |
+>{\centering\arraybackslash}p{0.6cm} |
+>{\centering\arraybackslash}p{0.6cm} |
+>{\centering\arraybackslash}p{0.6cm}
+}
+\toprule
+\textbf{Detector} & \textbf{BDD} & \textbf{Foggy} & \textbf{DWD} & \textbf{Drone} & \textbf{R2A} \\
+\midrule
+Sparse R-CNN~\cite{sun2021sparse} &36.3  &43.2  &42.3  &28.7  &60.9  \\
+ \rowcolor{lightgreen}
+\textit{\textbf{Ours}}     & \textbf{37.6} & \textbf{44.6} &\textbf{45.6}  &\textbf{30.3}  &\textbf{62.1}  \\
+\midrule
+TOOD~\cite{feng2021tood}         & 56.1 & 56.6  & 47.3 & 46.8 &70.3  \\
+ \rowcolor{lightgreen}
+\textit{\textbf{Ours}}    & \textbf{59.4} & \textbf{60.8} &\textbf{50.1}  & \textbf{50.3} &\textbf{72.8}  \\
+\bottomrule
+\end{tabularx}
+\label{tab:ab_detectors}
+% \vspace{-6pt}
+\end{table}

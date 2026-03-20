@@ -1,0 +1,29 @@
+
+\begin{table}[ht]
+    \centering
+    \caption{Performance comparison with other methods under In-Domain and Cross-Domain settings.}
+    \vspace{-4pt}
+    \label{tab:performance_refined}
+
+    {\small
+    \setlength{\tabcolsep}{10pt}
+    \resizebox{1\columnwidth}{!}{
+    \begin{tabular}{c|c|cc}
+    \toprule
+    \multirow{2}{*}{\textbf{Method}} 
+        & \textbf{In-Domain} 
+        & \multicolumn{2}{c}{\textbf{Cross-Domain}} \\
+    \cline{2-4}
+        & \textbf{Cityscapes} & \textbf{BDD} & \textbf{Foggy} \\
+    \midrule
+    GDD~\cite{he2025generalized}& 59.8 & 50.1 & 46.6 \\
+    Boost~\cite{he2025boosting} & 61.1 & 50.7 & 49.3 \\
+    Ours 
+        & \textbf{61.8} \textcolor{red}{(+0.7)}
+        & \textbf{53.6} \textcolor{red}{(+2.9)}
+        & \textbf{53.1} \textcolor{red}{(+3.8)} \\
+    \bottomrule
+    \end{tabular}}
+    }
+\label{tab:indomain}
+\end{table}

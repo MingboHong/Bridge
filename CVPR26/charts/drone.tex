@@ -1,0 +1,39 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[ht]
+    \centering
+    \caption{DG Results (\%) on Diverse Weather (Dark, Foggy, and Extreme Dark). Best values are in \textbf{boldface}.}
+    \vspace{-4pt}
+    \label{tab:drone}
+    \renewcommand{\arraystretch}{1}
+    \setlength{\tabcolsep}{8pt}
+    \resizebox{\columnwidth}{!}{%
+    \begin{tabular}{l|ccc|>{\columncolor{gray!20}}c}
+    \toprule
+    \textbf{Methods} & \textbf{Dark} & \textbf{Foggy} & \textbf{Ext. Dark} & \textbf{Average} \\ 
+    \midrule
+    Faster R-CNN  & 33.1  & 54.8 &8.1 &  32.0 \\ 
+     GDD \footnotesize{ \textit{(Diff. Detector, SD)}}~\cite{he2025generalized} \textit{\scriptsize{(\textcolor{darkblue}{CVPR'25})}} & {40.1} & {54.8} & {20.4} & {38.4} \\
+    Boost\footnotesize{ \textit{(Diff. Detector, SD)}}~\cite{he2025boosting} \textit{\scriptsize{(\textcolor{darkblue}{ICCV'25})}} & {42.0} & \textbf{58.3} & {21.3} & {40.5} \\
+    \rowcolor{lightgreen}
+    \textit{\textbf{Ours\footnotesize{ (Diff. Detector, SD)}}} & \textbf{45.2} & {56.5} &  \textbf{24.2} & \textbf{42.0} \\
+
+     \midrule
+     SAM & 40.4 & 52.4  & 19.9 & 37.6 \\
+     \rowcolor{lightgreen}
+    \textit{\textbf{Ours\footnotesize{ (SAM backbone)}}} & \textbf{41.1} & \textbf{53.2}  & \textbf{20.7}  & \textbf{38.4} \\
+    
+    \midrule
+    DINOv2 & 47.0 & 53.0  & 26.5 & 42.2 \\
+    \rowcolor{lightgreen}
+    \textit{\textbf{Ours\footnotesize{ (DINOv2 backbone)}}} & \textbf{48.9} & \textbf{58.2}  & \textbf{29.8}  & \textbf{45.6} \\
+    \midrule
+    DINOv3 & 50.9 &  56.7 & 33.7 & 47.1 \\
+    \rowcolor{lightgreen}
+    \textit{\textbf{Ours\footnotesize{ (DINOv3 backbone)}}} & \textbf{51.4} & \textbf{59.9} & \textbf{34.0}  & \textbf{48.4} \\
+   
+     \bottomrule
+    \end{tabular}%
+    }
+    \vspace{-6pt}
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

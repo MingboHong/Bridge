@@ -1,0 +1,115 @@
+\subsection{Causal Basis Block}
+To estimate feature expectations for the front-door adjustment, we employ a \textbf{subspace projection}~\cite{strang2022introduction} mechanism,
+where input features are projected onto a learnable low-dimensional subspace spanned by a set of basis vectors.
+\subsubsection{Expectations Estimation} 
+\label{sec:coefficients_estimation}
+Given an input feature representation $\mathcal{X} \in \mathbb{R}^{B \times N \times C}$, 
+we introduce a set of learnable bases
+$\mathcal{B} = [b_1, \dots, b_K] \in \mathbb{R}^{K \times C}$ ($K < C$),
+which span a low-rank subspace.
+
+For each feature vector, we seek coefficients
+$\mathcal{C} \in \mathbb{R}^{B \times N \times K}$
+that minimize the reconstruction error in this subspace:
+\begin{equation}
+\arg\min \sum_{i=1}^{N} \| \mathcal{X}_i - (\mathcal{C} \mathcal{B})_i \|^2,
+\end{equation}
+where the sum is taken over the $N$ samples in the batch.
+This objective ensures that the projected features $\mathcal{C} \mathcal{B}$
+are the closest approximation to $\mathcal{X}$ within the low-rank subspace spanned by $\mathcal{B}$.
+
+The above minimization admits a closed-form least-squares solution:
+\begin{equation}
+\mathcal{C} = (\mathcal{B}^\top \mathcal{B})^{-1} \mathcal{B}^\top \mathcal{X}.
+\end{equation}
+Here, $(\mathcal{B}^\top \mathcal{B})^{-1}$ accounts for the fact that the bases may not remain orthogonal during training.
+The reconstructed features
+\begin{equation}
+\mathcal{C} \mathcal{B}
+= (\mathcal{B} (\mathcal{B}^\top \mathcal{B})^{-1} \mathcal{B}^\top)\mathcal{X}
+\end{equation}
+thus correspond to the projection of $\mathcal{X}$ onto the low-rank subspace.
+
+Crucially, minimizing the squared reconstruction error over all feature vectors
+can be interpreted as computing the expectation in the squared-error sense:
+\begin{equation}
+\mathbb{E}[X] 
+= \arg\min \; \mathbb{E}\big[\| X - Y \|^2\big]
+\approx \arg\min \sum_{i=1}^{N} \| X_i - Y_i \|^2,
+\end{equation}
+where the sum over $N$ samples provides an empirical estimate of the expectation.
+
+Accordingly, we define the subspace projection function, which provides a low-rank approximation of the feature expectation:
+
+\begin{equation}
+f_{\mathrm{sp}}(\mathcal{X})
+\triangleq \mathcal{C} \mathcal{B}
+\approx \mathbb{E}[\mathcal{X}]
+\in \mathbb{R}^{B \times N \times C}.
+\label{equ:subspace_projection}
+\end{equation}
+
+
+Note that the entire procedure is \textbf{differentiable} and can be optimized end-to-end with the network.
+At inference, the term $\mathcal{B} (\mathcal{B}^{\top} \mathcal{B})^{-1} \mathcal{B}^{\top}$ can be precomputed and absorbed into a single $C \times C$ matrix, reducing computation and simplifying deployment.
+
+
+
+To further capture the generalized information of the input features,
+we introduce a set of learnable \textit{Sample Queries}
+$\mathcal{Q}_s \in \mathbb{R}^{1 \times S \times C}$,
+which play a role analogous to the object queries in DETR~\cite{carion2020end}
+and Mask2Former~\cite{cheng2022masked}.
+During training, these queries implicitly aggregate global representations
+across samples, thereby facilitating a more stable estimation of feature expectations.
+
+The \textit{Sample Queries} interact with the input features to compute a set of correlation maps,
+which are aggregated into an expected spatial weighting map:
+\begin{equation}
+\resizebox{0.433\textwidth}{!}{%
+$\displaystyle
+   \mathcal{A} \;=\;
+   \sum_{i=1}^{S}
+   (\mathcal{Q}_s \mathcal{X})_i
+   \odot
+   \operatorname{Softmax}((\mathcal{Q}_s \mathcal{X}))_i
+   \in \mathbb{R}^{B \times N \times 1},
+   $}
+\label{equ:avg_correlation_corrected}
+\end{equation}
+where $\mathcal{A}$ encodes the expected spatial importance induced by the \textit{Sample Queries}.
+The input features are then reweighted by $\mathcal{A}$ to obtain a query-guided representation:
+\begin{equation}
+\mathcal{X}_q = \mathcal{A} \odot \mathcal{X} \in \mathbb{R}^{B \times N \times C}.
+\label{equ:query_aggregation}
+\end{equation}
+This operation highlights generalized and spatially consistent information in $\mathcal{X}$.
+
+Accordingly, the query-guided features $\mathcal{X}_q$ are used as the input to the subspace projection
+function $f_{\mathrm{sp}}(\cdot)$ defined in Eq.~\eqref{equ:subspace_projection},
+yielding the feature expectation estimate required by the front-door adjustment.
+
+
+\subsubsection{Feature Aggregation}
+CBB outputs a combination of expected features and mediator features, capturing both generalized and task-specific information.  
+First, the mediator features $\mathcal{M}$ are computed by applying a simple convolutional block to the input features $\mathcal{X}$:  
+\begin{equation}
+   \mathcal{M} = \mathrm{Conv}(\mathcal{X}).
+\end{equation}
+
+Next, the feature expectations 
+$\hat{\mathbb{E}}[\mathcal{X}]$ (ideally, $\mathbb{E}[\mathcal{X}'] = \mathbb{E}[\mathcal{X}]$) 
+and $\hat{\mathbb{E}}[\mathcal{M}]$ are estimated 
+using the subspace projection $f_{\mathrm{sp}}$ described in Sec.~\ref{sec:coefficients_estimation}.  
+
+The final output of the CBB is obtained by combining these estimates with the mediator features:
+\begin{equation}
+   \mathcal{F}_{\text{out}} = \hat{\mathbb{E}}[\mathcal{X}] + \hat{\mathbb{E}}[\mathcal{M}] + \mathcal{M}.
+\end{equation}
+
+Here, the first two terms implement the front-door adjustment, mitigating spurious correlations, 
+while the inclusion of $\mathcal{M}$ preserves task-specific information for downstream processing. 
+The CBB is fully differentiable and trained end-to-end using the downstream task loss, 
+requiring no additional supervision.
+
+

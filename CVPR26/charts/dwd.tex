@@ -1,0 +1,97 @@
+
+% % DWD
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{table}[ht]
+%     \centering
+%     \caption{DG Results (\%) on Diverse Weather Datasets.}
+%     \vspace{-4pt}
+%     \label{tab:dwd}
+%     \setlength{\tabcolsep}{8pt}
+%     \resizebox{1\columnwidth}{!}
+%     {
+%     \begin{tabular}{l|cccc|>{\columncolor{gray!20}}c}
+%     \toprule
+%     \textbf{Methods} & \textbf{DF} & \textbf{DR} & \textbf{NR} & \textbf{NS} & \textbf{Average} \\ \midrule
+%     CDSD~\cite{cdsd} \textit{\scriptsize{(\textcolor{darkblue}{CVPR'22})}} & 33.5 & 28.2 & 16.6 & 36.6 & 28.7 \\
+%     SHADE~\cite{shade} \textit{\scriptsize{(\textcolor{darkblue}{ECCV'22})}} & 33.4 & 29.5 & 16.8 & 33.9 & 28.4 \\
+%     CLIPGap~\cite{clip_gap} \textit{\scriptsize{(\textcolor{darkblue}{CVPR'23})}} & 32.0 & 26.0 & 12.4 & 34.4 & 26.2 \\
+%     SRCD~\cite{srcd} \textit{\scriptsize{(\textcolor{darkblue}{TNNLS'24})}} & 35.9 & 28.8 & 17.0 & 36.7 & 29.6 \\
+%     G-NAS~\cite{gnas} \textit{\scriptsize{(\textcolor{darkblue}{AAAI'24})}} & 36.4 & 35.1 & 17.4 & 45.0 & 33.5 \\
+%     PhysAug~\cite{physaug} \textit{\scriptsize{(\textcolor{darkblue}{ArXiv'24})}} & 40.8 & 41.2 & 23.1 & 44.9 & 37.5 \\ 
+%     OA-DG~\cite{lee2024object} \textit{\scriptsize{(\textcolor{darkblue}{AAAI'24})}} & 38.3 & 33.9 & 16.8 & 38.0 & 31.8 \\
+%     DivAlign~\cite{Diversification} \textit{\scriptsize{(\textcolor{darkblue}{CVPR'24})}} & 37.2 & 38.1 & 24.1 & 42.5 & 35.5 \\
+%     UFR~\cite{ufr} \textit{\scriptsize{(\textcolor{darkblue}{CVPR'24})}} & 39.6 & 33.2 & 19.2 & 40.8 & 33.2 \\
+%     Prompt-D~\cite{prompt-d} \textit{\scriptsize{(\textcolor{darkblue}{CVPR'24})}} & 39.1 & 33.7 & 19.2 & 38.5 & 32.6 \\
+%     DIDM~\cite{didm} \textit{\scriptsize{(\textcolor{darkblue}{ArXiv'25})}} & 39.3 & 35.4 & 19.2 & 42.0 & 34.0 \\
+%     % GDD \footnotesize{\textit{(Diff. Detector,SD)}} \normalsize~\cite{he2025generalized}  \textit{\scriptsize{(\textcolor{darkblue}{CVPR'25})}} & 43.3 & 42.5 & 27.8 & 47.0 & 40.2 \\
+%     % GDD \footnotesize{\textit{(Diff. Guided, R101)}} \normalsize~\cite{he2025generalized}  \textit{\scriptsize{(\textcolor{darkblue}{CVPR'25})}} & 44.7 & 37.4 & 21.7 & 48.7 & 38.1 \\
+%     Boost^{*}\footnotesize{ \textit{(Diff. Detector,SD)}}\normalsize~\cite{he2025boosting} \textit{\scriptsize{(\textcolor{darkblue}{ICCV'25})}} &45.9 &44.3 & 28.2 &48.8 & 41.8 \\
+%     Boost^{*}\footnotesize{ \textit{(Diff. Guided, R101)}}\normalsize~\cite{he2025boosting} \textit{\scriptsize{(\textcolor{darkblue}{ICCV'25})}} &44.4 & 36.1 & 20.9 & 47.7 & 37.3 \\
+%     \midrule
+%    % \rowcolor{lightgreen}
+%     \textit{\textbf{Ours\footnotesize{ (Diff. Detector, SD)}}} & 47.5 & 47.0 & 30.2 & 51.9 & 44.2 \\
+%     \textit{\textbf{Ours\footnotesize{ (Diff. Guided, R101)}}} & - & - & - & - & - \\
+%     \midrule
+%     DINOv2 & 40.7 & 43.8 & 33.8 & 44.7 & 40.75 \\
+%     \textit{\textbf{Ours\footnotesize{ (DINOv2 backbone)}}} & 44.0 & 48.7 & 37.0 & 49.3 & 44.75 \\
+%     \midrule
+%     DINOv3 & 46.6 & 50.7 & 45.1 & 52.0 & 48.6 \\
+%     \textit{\textbf{Ours\footnotesize{ (DINOv3 backbone)}}} & 48.1 & 53.8 & 46.7 & 54.6 & 50.8 \\
+%     \midrule
+%     SAM & -- & -- & -- & -- & -- \\
+%     \textit{\textbf{Ours\footnotesize{ (SAM backbone)}}} & -- & -- & -- & -- & -- \\
+%     \bottomrule
+%     \end{tabular}
+%     }
+% \end{table}
+
+
+
+\begin{table}[ht]
+    \centering
+    \caption{DG Results (\%) on Diverse Weather Datasets. Best values are in \textbf{boldface}. $*$Results reimplemented by us using 19,395 training images.}
+    \vspace{-4pt}
+    \label{tab:dwd}
+    \setlength{\tabcolsep}{10pt}
+    \resizebox{1\columnwidth}{!}{
+    \begin{tabular}{l|cccc|>{\columncolor{gray!20}}c}
+    \toprule
+    \textbf{Methods} & \textbf{DF} & \textbf{DR} & \textbf{NR} & \textbf{NS} & \textbf{Average} \\ 
+    \midrule
+    CDSD~\cite{cdsd} \textit{\scriptsize{(\textcolor{darkblue}{CVPR'22})}} & 33.5 & 28.2 & 16.6 & 36.6 & 28.7 \\
+    SHADE~\cite{shade} \textit{\scriptsize{(\textcolor{darkblue}{ECCV'22})}} & 33.4 & 29.5 & 16.8 & 33.9 & 28.4 \\
+    CLIPGap~\cite{clip_gap} \textit{\scriptsize{(\textcolor{darkblue}{CVPR'23})}} & 32.0 & 26.0 & 12.4 & 34.4 & 26.2 \\
+    SRCD~\cite{srcd} \textit{\scriptsize{(\textcolor{darkblue}{TNNLS'24})}} & 35.9 & 28.8 & 17.0 & 36.7 & 29.6 \\
+    G-NAS~\cite{gnas} \textit{\scriptsize{(\textcolor{darkblue}{AAAI'24})}} & 36.4 & 35.1 & 17.4 & 45.0 & 33.5 \\
+    PhysAug~\cite{physaug} \textit{\scriptsize{(\textcolor{darkblue}{ArXiv'24})}} & 40.8 & 41.2 & 23.1 & 44.9 & 37.5 \\ 
+    OA-DG~\cite{lee2024object} \textit{\scriptsize{(\textcolor{darkblue}{AAAI'24})}} & 38.3 & 33.9 & 16.8 & 38.0 & 31.8 \\
+    DivAlign~\cite{Diversification} \textit{\scriptsize{(\textcolor{darkblue}{CVPR'24})}} & 37.2 & 38.1 & 24.1 & 42.5 & 35.5 \\
+    UFR~\cite{ufr} \textit{\scriptsize{(\textcolor{darkblue}{CVPR'24})}} & 39.6 & 33.2 & 19.2 & 40.8 & 33.2 \\
+    Prompt-D~\cite{prompt-d} \textit{\scriptsize{(\textcolor{darkblue}{CVPR'24})}} & 39.1 & 33.7 & 19.2 & 38.5 & 32.6 \\
+    DIDM~\cite{didm} \textit{\scriptsize{(\textcolor{darkblue}{ArXiv'25})}} & 39.3 & 35.4 & 19.2 & 42.0 & 34.0 \\
+    Boost$^{*}$~\footnotesize{\textit{(Diff. Detector, SD)}}~\cite{he2025boosting} \textit{\scriptsize{(\textcolor{darkblue}{ICCV'25})}} &45.9 &44.3 & 28.2 &48.8 & 41.8 \\
+    \rowcolor{lightgreen}
+    \textit{\textbf{Ours (Diff. Detector, SD)}} & \textbf{47.5} & \textbf{47.0} & \textbf{30.2} & \textbf{51.9} & \textbf{44.2} \\
+    \midrule
+    Boost$^{*}$~\footnotesize{\textit{(Diff. Guided, R101)}}~\cite{he2025boosting} \textit{\scriptsize{(\textcolor{darkblue}{ICCV'25})}} &44.4 & 36.1 & 20.9 & 47.7 & 37.3 \\
+    \rowcolor{lightgreen}
+    \textit{\textbf{Ours (Diff. Guided, R101)}} &\textbf{44.5} & \textbf{38.4} &\textbf{22.4} & \textbf{48.6} & \textbf{38.5} \\
+    \midrule
+    SAM & 41.2 & 41.3 & 26.1 & 45.0 & 38.4 \\
+    \rowcolor{lightgreen}
+    \textit{\textbf{Ours (SAM backbone)}} & \textbf{42.7} & \textbf{44.3} & \textbf{28.6} & \textbf{48.0} & \textbf{40.9} \\
+    \midrule
+    DINOv2 & 40.7 & 43.8 & 33.8 & 44.7 & 40.8 \\
+    \rowcolor{lightgreen}
+    \textit{\textbf{Ours (DINOv2 backbone)}} & \textbf{44.0} & \textbf{48.7} & \textbf{37.0} & \textbf{49.3} & \textbf{44.8} \\
+    \midrule
+    DINOv3 & 46.6 & 50.7 & 45.1 & 52.0 & 48.6 \\
+    \rowcolor{lightgreen}
+    \textit{\textbf{Ours (DINOv3 backbone)}} & \textbf{48.1} & \textbf{53.8} & \textbf{46.7} & \textbf{54.6} & \textbf{50.8} \\
+    \bottomrule
+    \end{tabular}}
+
+
+
+
+\end{table}

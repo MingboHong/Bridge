@@ -1,0 +1,66 @@
+
+    
+    % \vspace{-3mm}
+    
+    \begin{table}[htbp]
+        \centering
+        \caption{Effect of Low-Rank Basis and Sample Queries within CBB.}
+        \vspace{-4pt}
+        \label{tab:component}
+        \footnotesize
+        \renewcommand{\arraystretch}{1}
+    \setlength{\tabcolsep}{4pt}  % 
+    
+    \resizebox{\columnwidth}{!}{%
+        \begin{tabularx}{\linewidth}{%
+        >{\centering\arraybackslash}X % Backbone
+        |>{\centering\arraybackslash}p{2.cm} % LRR
+        |>{\centering\arraybackslash}p{2.3cm} % Sample Queries 
+        |>{\centering\arraybackslash}X % mAP
+        }
+        \toprule
+        \textbf{Backbone} & \textbf{LRB} & \textbf{Sample Queries} & \textbf{mAP} \\
+        \midrule
+        \multirow{3}{*}{DINOv3}  &           &   &  57.7        \\
+                                 & \ding{51} &  & 60.9          \\
+                                 & \ding{51} & \ding{51} & \textbf{61.6} \\
+        \midrule
+        \multirow{3}{*}{SD}      &           &  & 51.8           \\
+                                 & \ding{51} &  & 53.1          \\
+                                 & \ding{51} & \ding{51} & \textbf{53.6} \\
+        \midrule
+        \multirow{3}{*}{SAM}    &           &     & 45.8         \\
+                                & \ding{51} &  & 49.2           \\
+                                 & \ding{51} & \ding{51} & \textbf{49.9} \\
+        \bottomrule
+        \end{tabularx}
+        }
+        \label{tab:cbb_componet}
+        \vspace{-6pt}
+        \end{table}
+
+\input{charts/fd}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Ablation Study on Basis Ratio}
+    \vspace{-4pt}
+    \label{tab:basis_ratio}
+    \footnotesize
+    \renewcommand{\arraystretch}{1}
+    \setlength{\tabcolsep}{6pt}  
+    \resizebox{\columnwidth}{!}{%
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}m{0.15\linewidth}|>{\centering\arraybackslash}X>{\centering\arraybackslash}X>{\centering\arraybackslash}X>{\centering\arraybackslash}X>{\centering\arraybackslash}X}
+    \toprule
+    \multirow{2}{*}{\textbf{Backbone}} & \multicolumn{5}{c}{\textbf{Basis Ratio}} \\
+    \cmidrule(lr){2-6}
+     & 90\% & 70\% & 50\% & 25\% & 12.5\% \\
+    \midrule
+    DINOv3 & 60.9 & 61.1 & 61.3 & 61.3 & \textbf{61.6} \\
+    SAM    & 48.5 & 48.7 & \textbf{49.9} & 48.5 & 48.4 \\
+    SD     & 52.8 & \textbf{53.6} & 52.5 & 52.5 & 51.9 \\
+    \bottomrule
+    \end{tabularx}
+    }
+    \vspace{-6pt}
+\end{table}

@@ -1,0 +1,27 @@
+\begin{table}[t!]
+\centering
+\caption{DG Results (\%) on five benchmarks using ResNet101 Backbone.}
+\vspace{-4pt}
+\label{tab:resnet_five_datasets}
+\footnotesize
+\begin{tabularx}{\linewidth}{
+>{\raggedright\arraybackslash}X |
+>{\centering\arraybackslash}p{0.8cm} |
+>{\centering\arraybackslash}p{0.8cm} |
+>{\centering\arraybackslash}p{0.8cm} |
+>{\centering\arraybackslash}p{0.8cm} |
+>{\centering\arraybackslash}p{0.8cm}
+}
+\toprule
+\textbf{Method} & \textbf{BDD} & \textbf{Foggy} & \textbf{DWD} & \textbf{Drone} & \textbf{R2A} \\
+\midrule
+ResNet101~\cite{he2016deep} & 44.0 & 47.2 & 35.9 & 31.2 & 35.5 \\
+\rowcolor{lightgreen}
+Ours  & \textbf{45.3} & \textbf{49.5} & \textbf{37.0} & \textbf{32.1} & \textbf{36.8} 
+\\
+
+\bottomrule
+
+\end{tabularx}
+\label{tag:resnet}
+\end{table}

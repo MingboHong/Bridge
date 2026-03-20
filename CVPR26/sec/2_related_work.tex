@@ -1,0 +1,43 @@
+\section{Related Work}
+\label{sec:related-works}
+
+\paragraph{Domain Generalization for Visual Perception.}
+% As a crucial yet challenging task, domain generalization~\cite{blanchard2011generalizing} (DG) aims to fully exploit the limited knowledge from single or multiple source domains to generalize well to out-of-distribution (OOD) target domains. 
+Domain generalization~\cite{blanchard2011generalizing} has been widely studied in various visual perception tasks, 
+including image classification~\cite{li2017deeper,li2019feature}, object detection~\cite{malisiewicz2011ensemble,hoffman2016learning}, medical imaging~\cite{liu2020ms,liu2020shape}, semantic segmentation~\cite{yue2019domain,volpi2019addressing}, and beyond. 
+To tackle the DG problem, a wide range of approaches have been proposed from different perspectives, 
+including data augmentation~\cite{volpi2019addressing, shi2020towards}, adversarial training~\cite{li2018deep,rahman2020correlation,albuquerque2019generalizing}, disentangled representation learning~\cite{li2017deeper,khosla2012undoing}, meta-learning~\cite{li2018learning,balaji2018metareg}, and more.
+More recently, several works have explored the potential of Vision Foundation Models (VFMs)~\cite{caron2021emerging,kirillov2023segany} 
+in various DG tasks~\cite{he2025generalized,wei2024stronger,yun2025soma}.
+
+
+Building on VFMs, our \textbf{\textit{Bridge }} aims to mitigate spurious correlations that may arise in the process of leveraging frozen VFMs for downstream training, 
+especially when trained on a single, data-scarce source domain.
+\vspace{-1mm}
+\paragraph{Vision Foundation Models (VFMs).}
+% Following the success of BERT~\cite{devlin2019bert} and other foundation models in Natural Language Processing (NLP), 
+VFMs have rapidly emerged in the vision community in recent years, benefiting from large-scale training data in a self-supervised or semi-supervised manner. 
+Amongst others, ViT~\cite{dosovitskiy2020image} pioneered the application of large-scale transformer architectures to image classification, demonstrating the scalability of transformer-based models on visual tasks. 
+Building on this, transformer-based self-supervised paradigms, such as DINO~\cite{caron2021emerging,oquab2023dinov2,simeoni2025dinov3} and masked autoencoders~\cite{he2022masked} (MAE), have been proposed to learn robust image representations for downstream tasks in a label-efficient manner.
+% Beyond pure visual representation learning, multimodal models like CLIP~\cite{radford2021learning} aim to align image and text embeddings, enabling zero-shot recognition and cross-modal reasoning. 
+Meanwhile, models such as the Segment Anything Model~\cite{kirillov2023segany,ravi2024sam2} (SAM) extend the foundation model concept to dense prediction tasks, providing flexible multimodal prompts to accommodate diverse segmentation scenarios. 
+Interestingly, generative models, such as Stable Diffusion~\cite{rombach2022high}, have also been explored as a foundation model, leveraging large-scale pretraining to support visual perception tasks ~\cite{he2025generalized,he2024diffusion,he2025boosting}.
+
+Despite VFMs' remarkable performance in downstream tasks, most existing methods directly adopt these models while overlooking spurious correlations, hindering their performance, particularly in domain generalization tasks.
+\vspace{-2mm}
+\paragraph{Causal Inference.}
+Causal inference~\cite{pearl2016causal,neuberg2003causality} has emerged as a powerful paradigm gaining increasing attention in deep learning, aiming to uncover intrinsic 
+causal relationships by employing adjustment strategies~\cite{liu2023cross,yang2021deconfounded} or counterfactual~\cite{weng2024fast,niu2021counterfactual,parvaneh2020counterfactual} to mitigate spurious correlations. 
+Recent studies have successfully applied causal methods across diverse computer vision tasks, including image classification~\cite{chalupka2014visual,lopez2017discovering}, 
+visual question answering~\cite{liu2023cross,yang2021deconfounded,wang2020visual}, object detection~\cite{zhang2022multiple}, and segmentation~\cite{zhang2020causal,shao2021improving}.
+Most noticeably,
+Wang et al.~\cite{wang2020visual} proposed a framework leveraging back-door adjustment to estimate the interventional distribution for image captioning, VQA, and VCR. 
+Building upon this work, Zhang et al.~\cite{zhang2020causal} extended similar principles to semantic segmentation by updating class-specific average masks to approximate confounder sets
+for back-door adjustment. More recently, Wang et al.~\cite{wang2024vision} presented a comprehensive causal intervention framework integrating both front-door and back-door adjustments,
+addressing observable and unobservable confounders to encourage unbiased feature learning in vision-and-language navigation. 
+Liang et al.~\cite{liang2024confounded} employed front-door adjustment to reduce the influence of gaze-irrelevant factors on final predictions, 
+while Zhang et al.~\cite{zhang2022multiple} developed a causal framework for object detection that enhances robustness under adverse weather conditions. Although these methods have demonstrated effectiveness across various tasks, they heavily rely on external confounder dictionaries that require tailored post-processing steps 
+(e.g., clustering~\cite{zhang2020causal}, momentum updates~\cite{liang2024confounded}), limiting their flexibility and scalability.
+ 
+In contrast, this paper introduces a novel approach that eliminates a series of post-processing steps by leveraging the learning basis to formulate the front-door adjustment, thereby reducing bias corrections from source data, while simultaneously incorporating a low-rank structure to preserve causal representations in a compact form.
+\vspace{-1mm}

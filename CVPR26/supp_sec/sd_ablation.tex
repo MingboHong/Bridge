@@ -1,0 +1,20 @@
+\begin{table}[ht]
+    \centering
+    \caption{Ablation study of the proposed \textit{Bridge} module built upon a Generative VFM. Each row adds one component incrementally.}
+    \vspace{-4pt}
+    \label{tab:ablation}
+    \setlength{\tabcolsep}{10pt}
+    \resizebox{1\columnwidth}{!}{
+    \begin{tabular}{l|cccc|>{\columncolor{gray!20}}c}
+    \toprule
+    \textbf{Method} & \textbf{DF} & \textbf{DR} & \textbf{NR} & \textbf{NS} & \textbf{Avg} \\
+    \midrule
+    \textbf{Baseline} & 45.3 & 43.3 & 26.0 & 48.4 & 40.8 \\
+    \textbf{+ Image Encoder} & 46.5 & 45.9 & 28.5 & 50.7 & 42.9 \\
+    \textbf{+ Latent Encoder} & 45.9 & 45.9 & 30.0 & 51.2 & 43.3 \\
+    \rowcolor{lightgreen}
+    \textbf{+ CBB (Full Model)} & \textbf{47.5} & \textbf{47.0} & \textbf{30.2} & \textbf{51.9} & \textbf{44.2} \\
+    \bottomrule
+    \end{tabular}}
+\label{tab:sd_ablation}
+\end{table}

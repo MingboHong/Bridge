@@ -1,0 +1,33 @@
+# Overview
+
+Bridge is a basis-driven causal inference framework for domain generalization in object detection. It targets spurious correlations induced by confounders (e.g., illumination, co-occurrence, style) when training on limited single-source data. By blocking confounders through a causal mechanism, Bridge improves robustness across both discriminative and generative Vision Foundation Models (VFMs).
+
+![Teaser. Gradient responses of the detector for confounder analysis.](./bridge/heatmap.png)
+
+# Method Overview
+
+We keep the implementation details minimal here and focus on the structure.
+
+- Multi-scale features are extracted from a frozen VFM backbone.
+- A Causal Basis Block (CBB) calibrates features via a front-door adjustment perspective in a low-rank basis space.
+- Calibrated features are fed into task-specific heads for prediction.
+
+![Overview of Bridge. Multi-scale features are extracted from a VFM, calibrated by the Causal Basis Block (CBB), and fed into task-specific heads.](./bridge/pipeline.png)
+
+# Qualitative Results
+
+![Visualization results across benchmarks. (a) Baseline DINOv3 detector. (b) Bridge. Best viewed zoomed in.](./bridge/visualization.png)
+
+# UAV Dataset Visualizations (Supplementary)
+
+![RGB histograms under varying conditions: clear, dark, foggy, and extreme dark.](./bridge/hist_drone.png)
+
+![Examples of different weather conditions in DroneVehicle. Bottom row shows enhanced extreme-dark images for illustration only.](./bridge/drone_images.png)
+
+# Quantitative Results
+
+All quantitative tables are available in the paper and supplementary material. The project page focuses on the method overview and qualitative evidence.
+
+# Conclusion
+
+Bridge integrates causal inference into VFM-based DGOD with a lightweight, plug-and-play module. Across ground-level and aerial benchmarks, varied weather, and visual styles, it consistently improves robustness and generalization. The new weather-annotated UAV benchmark and supplemental analyses further broaden DG evaluation in remote sensing.

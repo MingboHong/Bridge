@@ -1,0 +1,20 @@
+\begin{table*}[t!]
+\centering
+\caption{Training hyperparameters for different datasets.}
+\label{tab:hyperparameters}
+\footnotesize
+\begin{tabularx}{\textwidth}{lXXXXX} % 
+\toprule
+\textbf{Setting} & \textbf{BDD100K} & \textbf{FoggyCityscape} & \textbf{DWD} & \textbf{R2A} & \textbf{Drone} \\
+\midrule
+Optimizer & SGD & SGD & SGD & SGD & SGD \\
+Learning rate & 1e-4 & 1e-4 & 1e-4 & 1e-4 & 1e-4 \\
+Weight decay & 1e-5 & 1e-5 & 1e-5 & 1e-5 & 1e-5 \\
+Batch size & 4 & 4 & 16 & 4 & 8 \\
+Warmup iter & 500 & 500 & 500 & 500 & 500 \\
+Iter & 20000 & 20000 & 20000 & 20000 & 12000 \\
+LR Scheduler & [16000, 19000] & [16000, 19000] & [18000] & [16000, 19000] & [10000] \\
+\multicolumn{6}{l}{Data augmentation: RandomResize, RandomCrop, RandomFlip, RandColor, RandomErasing, FDA~\cite{yang2020fda}} \\
+\bottomrule
+\end{tabularx}
+\end{table*}

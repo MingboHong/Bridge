@@ -1,0 +1,129 @@
+\section{Experiments}
+\label{sec:experiments}
+
+\subsection{Datasets}
+\noindent\textbf{\textit{Cross-Camera}}: We train on Cityscapes~\cite{cordts2016cityscapes} (2,975 imgs) and evaluate on BDD100K~\cite{yu2020bdd100k}, reporting results on the seven categories shared by both datasets, following~\cite{saito2019strong}.
+
+\noindent\textbf{\textit{Adverse Weather}}: We train on Cityscapes~\cite{cordts2016cityscapes} and evaluate on FoggyCityscapes~\cite{sakaridis2018semantic}, using the most challenging attenuation coefficient split (0.02) to assess robustness.
+
+\noindent\textbf{\textit{Real-to-Artistic}}: We train on VOC~\cite{everingham2010pascal} (16,551 real imgs) and evaluate on three stylized datasets~\cite{inoue2018cross}: Clipart (1K imgs, 20 categories), Comic (2K imgs, 6 categories), and Watercolor (2K imgs, 6 categories), following~\cite{li2022cross}.
+
+\noindent\textbf{\textit{Diverse Weather Datasets}}: We train on Daytime-Sunny (19,395 imgs) and evaluate on Night-Sunny (26,158 imgs), Night-Rainy (2,494 imgs), Dusk-Rainy (3,501 imgs), and Daytime-Foggy (3,775 imgs), following~\cite{wu2022single, lee2024object}.
+
+% \noindent\textbf{\textit{Corruption Cityscapes}}: A test-only benchmark~\cite{michaelis2019benchmarking} evaluating 15 corruption types across five severity levels. We follow the OADG~\cite{lee2024object} settings for comparison.
+
+\noindent\textbf{\textit{Diverse Weather DroneVehicle}}:
+Based on the DroneVehicle dataset~\cite{sun2022drone}, we construct one training set and three challenging testing scenarios: \textit{Clear} (8,881 imgs), \textit{Foggy} (1,040 imgs), \textit{Dark} (13,553 imgs), and \textit{Extreme-Dark} (4,965 imgs), corresponding to different levels of visibility and illumination degradation. This extension complements existing UAV detection benchmarks by introducing diverse weather conditions, 
+enabling the evaluation of domain generalization under adverse environments.
+Models are trained on clear conditions and evaluated on three subsets to 
+assess robustness under adverse weather and low-light environments.
+More details of this dataset are in the supplementary materials.
+
+\subsection{Implementation Details}
+
+
+Our experimental setup mostly follows that of Boost~\cite{ he2025boosting} and is implemented based on MMDetection~\cite{chen2019mmdetection}. For all experiments, we use Faster R-CNN~\cite{ren2016faster} as the detection framework. For generative VFMs, the detector is equipped with an FPN~\cite{lin2017feature} and a latent diffusion model~\cite{rombach2021highresolution} as the backbone feature extractor, using frozen weights from Stable Diffusion (SD) v2.1 released by StabilityAI. For discriminative VFMs, we also use Faster R-CNN with backbones initialized from the frozen pretrained weights of DINOv2-L, DINOv3-L, and SAM-Huge. To reduce the computational cost of diffusion-based features, we follow Boost~\cite{he2025boosting} and apply a knowledge distillation strategy~\cite{wang2024crosskd}, where the diffusion-based detector acts as the teacher to guide a smaller student detector. The student model is a Faster R-CNN equipped with a ResNet-101~\cite{he2016deep} backbone. All detectors are trained with SGD using a momentum of 0.9, weight decay of 0.0001, and an initial learning rate of 0.01. Detailed implementation and model structures are provided in the supplementary material.
+
+
+
+% BDD100K: ~ref{tab:bdd100k}
+
+% Our experimental setup mostly follows that of GDD~\cite{he2025generalized}. We implement our framework based on MMDetection~\cite{chen2019mmdetection}.
+% For generative VFMs, we adopt Faster R-CNN~\cite{girshick2015fast} with an FPN~\cite{lin2017feature} as the detector, and employ a latent diffusion model~\cite{rombach2021highresolution} as the backbone to serve as a feature extractor. The diffusion backbone uses frozen weights from Stable Diffusion (SD) v2.1 released by StabilityAI. Similar to GDD, we apply a knowledge distillation strategy~\cite{wang2024crosskd}, where the diffusion-based detector serves as the teacher to guide a smaller student detector, thereby alleviating the high computational cost of diffusion feature extraction. The student model is a Faster R-CNN equipped with a ResNet-101~\cite{he2016deep} backbone.
+% For discriminative VFMs, we use the frozen pretrained weights of the DINOv2-L, DINOv3-L, and SAM-Huge models.
+% We train all detectors using the SGD optimizer with a momentum of 0.9, a weight decay of 0.0001, and an initial learning rate of 0.01.
+% For a more detailed description of the implementation and model structure, please refer to our supplementary material.
+
+\input{charts/BDD}
+\input{charts/foggy}
+\input{charts/voc}
+\input{charts/dwd}
+\input{charts/drone.tex}
+
+
+% Our experimental setup mostly follows that of GDD~\cite{he2025generalized}. We implement our framework based on the MMDetection~\cite{chen2019mmdetection}. 
+% Specifically, we adopt Faster R-CNN~\cite{girshick2015fast} with an FPN~\cite{lin2017feature} as the detector, while employing a latent diffusion model~\cite{rombach2021highresolution} as the backbone to serve as a feature extractor. 
+% The diffusion backbone uses frozen weights from Stable Diffusion v2.1 released by StabilityAI.
+% Similar to GDD, 
+% we apply a knowledge distillation strategy, where a diffusion-based detector serves as the teacher to guide a smaller student detector, thereby alleviating the high computational cost of diffusion feature extraction.
+% The student model is a Faster R-CNN equipped with a ResNet-101~\cite{he2016deep} backbone.
+% We use the SGD optimizer with a momentum of 0.9 and a weight decay of 0.0001 in the initial learning rate of 0.01.
+
+\subsection{Comparison with State-of-the-Arts}
+We present quantitative results on various DG benchmarks in Tables \ref{tab:bdd100k}, \ref{tab:FoggyCityscapes}, \ref{tab:dwd}, \ref{tab:voc}, and \ref{tab:drone}, with AP$_{50}$ as the evaluation metric. 
+The following abbreviations are used in the tables: 
+\textbf{Com.} (Comic), \textbf{Wat.} (Watercolor), and \textbf{Cli.} (Clipart) for Table~\ref{tab:voc};
+\textbf{DF} (Daytime-Foggy), \textbf{DR} (Dusk-Rainy), \textbf{NR} (Night-Rainy), and \textbf{NS} (Night-Sunny) for Table~\ref{tab:dwd};
+and \textbf{Ext.~Dark} (Extreme Dark) for Table~\ref{tab:drone}.
+To facilitate comparison, \textbf{\textit{Bridge}}’s performance is highlighted in \colorbox{lightgreen}{light green} in the tables.
+
+
+\noindent\textbf{\textit{Cross-Camera}}:
+In Table~\ref{tab:bdd100k}, we evaluate \textbf{\textit{Bridge}} on the Cross-Camera DG benchmark, where the model is trained on Cityscapes and tested on BDD100K.  
+\textbf{\textit{Bridge}}, built upon a Stable Diffusion backbone (\textit{Diff.~Detector}), surpasses the previous state-of-the-art method Boost~\cite{he2025boosting} by a margin of $\mathbf{3.8}$ mAP. In addition, following the settings of Boost and GDD, we adopt the CrossKD~\cite{wang2024crosskd} technique to transfer knowledge from Stable Diffusion to a smaller backbone (\textit{Diff.~Guided, R101}), enabling lightweight deployment.  
+Compared with Boost’s \textit{Diff.~Guided} detector, our model still achieves a $\mathbf{2.0}$ mAP improvement, further demonstrating that \textbf{\textit{Bridge}} can effectively exploit VFM priors for robust domain generalization, even with a compact backbone.
+
+
+In terms of discriminative VFMs, \textbf{\textit{Bridge}} achieves consistent mAP improvements of $\mathbf{5.1}$, $\mathbf{1.1}$, and $\mathbf{2.0}$ over the corresponding baselines on DINOv2, DINOv3, and SAM, respectively, further demonstrating its strong generalization capability.  
+Notably, we observe substantial improvements in \textit{rider}, \textit{bike}, \textit{person}, and \textit{motor}.  
+These categories frequently {co-occur} in real-world driving scenes and exhibit significant {variations} in appearance, pose, and context.  
+The consistent gains on these challenging and correlated classes further validate the effectiveness of our proposed CBB, which enables \textbf{\textit{Bridge}} to disentangle causal visual factors and improve generalization under complex domain shifts.
+
+
+\noindent\textbf{\textit{Adverse Weather}}:
+Table~\ref{tab:FoggyCityscapes} presents results on the Adverse Weather DG benchmark, where the model is trained on Cityscapes and evaluated on FoggyCityscapes. Across different backbones, \textbf{\textit{Bridge}} achieves consistent mAP improvements of $\mathbf{5.4}$ for DINOv2, $\mathbf{3.9}$ for DINOv3, and $\mathbf{4.1}$ for SAM, highlighting its backbone-agnostic generalization capability. For diffusion-based detectors, \textbf{\textit{Bridge}} also outperforms Boost and GDD, further demonstrating its effectiveness across diverse detection paradigms.
+
+
+\noindent\textbf{\textit{Real-to-Artistic}}:
+Table~\ref{tab:voc} presents the results on the Real-to-Artistic DG benchmark, where the model is trained on VOC and evaluated on three stylized datasets~\cite{inoue2018cross}: \textit{Clipart}, \textit{Comic}, and \textit{Watercolor}.
+Although \textbf{\textit{Bridge}} shows only a slight improvement ($\mathbf{0.4}$ mAP) over \textit{Boost} on the SD backbone, the \textit{Diff.~Guided} detector achieves a larger gain of $\mathbf{1.0}$ mAP. This improvement arises because \textbf{\textit{Bridge}} effectively filters out redundant features, making it more conducive to knowledge distillation.
+For discriminative VFMs, \textbf{\textit{Bridge}} yields gains of $\mathbf{4.0}$, $\mathbf{0.6}$, and $\mathbf{0.7}$ mAP over DINOv2, DINOv3, and SAM, respectively. Notably, for DINOv3, despite an already strong baseline of $\mathbf{79.9}$ mAP on the challenging \textit{Clipart} dataset, \textbf{\textit{Bridge}} further boosts performance to $\mathbf{81.0}$ mAP.
+Overall, these results demonstrate the effectiveness of \textbf{\textit{Bridge}} in improving the transferability and generalization capability of both diffusion-based and discriminative VFMs.
+
+
+
+\noindent\textbf{\textit{Diverse Weather Datasets}}: Table~\ref{tab:dwd} reports the results on the Diverse Weather Dataset benchmark, where the model is trained on \textit{Daytime-Sunny} and evaluated on four unseen weather conditions: \textit{Daytime-Foggy}, \textit{Daytime-Rainy}, \textit{Night-Rainy}, and \textit{Night-Snowy}. Across different backbones, \textbf{\textit{Bridge}} consistently improves the average accuracy over strong baselines, with mAP gains of $\mathbf{2.4}$ for the Boost's \textit{Diff.~Detector}, $\mathbf{4.0}$ for the DINOv2 backbone, $\mathbf{2.2}$ for the DINOv3 backbone, and $\mathbf{2.5}$ for the SAM backbone. These results indicate that \textbf{\textit{Bridge}} effectively adapts to challenging conditions such as low-visibility fog, rain-induced occlusions, and low-light nighttime scenes, highlighting its robustness to adverse weather and illumination shifts.
+% Table~\ref{tab:dwd} reports results on the Diverse Weather domain generalization benchmark, where the model is trained on Daytime-Sunny and evaluated on four unseen weather conditions: Daytime-Foggy, Daytime-Rainy, Night-Rainy, and Night-Snowy. Across backbone, \textit{Bridge} consistently improves average accuracy over strong baselines, with gains of $\textcolor{red}{2.4}$ for Diffusion Detector with Boost, $\textcolor{red}{4.0}$ for DINOv2 backbone, $\textcolor{red}{2.2}$ for DINOv3 backbone, and $\textcolor{red}{2.5}$ for SAM backbone.
+
+% These results indicate that \textit{Bridge} effectively adapts to challenging conditions, including low-visibility fog, rain-induced occlusions, and low-light nighttime scenes, which underscores its robustness to adverse weather and illumination shifts.
+
+\noindent\textbf{\textit{Diverse Weather DroneVehicle}}:
+Table~\ref{tab:drone} presents results on the Diverse Weather DroneVehicle benchmark, where the model is trained on clear conditions and evaluated on Foggy, Dark, and Extreme-Dark subsets. Across all backbones, \textbf{\textit{Bridge}} consistently improves the average performance over strong baselines. Notably, under the Extreme-Dark scenario, the Faster R-CNN baseline performs poorly with only $\mathbf{8.1}$ mAP, whereas VFMs equipped with \textbf{\textit{Bridge}}, such as Diff.~Detector, DINOv2, and DINOv3, achieve significantly higher mAP of $\mathbf{24.2}$, $\mathbf{29.8}$, and $\mathbf{34.0}$, respectively, demonstrating their superior capability in extremely low-light conditions. This improvement is particularly important in extreme-dark scenarios, where images suffer from low signal-to-noise ratios. By leveraging the low-rank basis, \textbf{\textit{Bridge}} can focus on causal representations, preserving essential features even under severely degraded illumination. Gains are also observed in other challenging scenarios, e.g., Foggy and Dark, indicating the robustness of \textbf{\textit{Bridge}} across adverse lighting and weather conditions.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=1.02\textwidth]{figs/visualization.pdf}
+    \caption{Visualization results on four domain adaptation benchmarks: BDD100K (BDD)~\cite{yu2020bdd100k}, FoggyCityscapes (Foggy)~\cite{sakaridis2018semantic}, Diverse Weather Datasets (DWD)~\cite{wu2022single}, Diverse Weather DroneVehicle, and Real-to-Artistic (R2A)~\cite{inoue2018cross}. (a) shows the baseline model with the DINOv3 backbone, while (b) presents the results of our proposed \textbf{\textit{Bridge}} method. Best viewed with zooming in.}
+    \label{fig:visualization}
+    \vspace{-6pt}
+\end{figure*}
+
+\vspace{4pt}
+\noindent\textbf{Qualitative results.} 
+Figure~\ref{fig:visualization} presents qualitative visualizations using DINOv3 as the backbone detector. \textbf{\textit{Bridge}} produces more robust and precise detections under various challenging scenarios, showing fewer false alarms and missed objects compared to the baseline.
+
+\subsection{Ablation Study}
+\noindent{\textbf{Effect of Causal Basis Block}:}
+Table~\ref{tab:cbb_componet} reports the ablation results of different components within our CBB module. We adopt DINOv3, SAM, and SD as the backbone networks, train them on Cityscapes, and evaluate on Foggy Cityscapes. Compared to the baseline, incorporating Low-Rank Basis  (LRB) leads to mAP improvements of $3.2$, $3.4$, and $1.3$ for DINOv3, SAM, and SD, respectively. Further adding \textit{Sample Queries} for aggregating information from multiple samples provides additional gains of $0.7$, $0.7$, and $0.5$ mAP. These results demonstrate the effectiveness of the low-rank basis and \textit{Sample Queries} components in the proposed CBB module.
+
+We further re-implement the front-door adjustment proposed in GOAT~\cite{wang2024vision} using a cross-attention mechanism~\cite{vaswani2017attention}, which is inserted between multi-scale feature layers (implementation details are provided in the supplementary material). As shown in Table~\ref{tab:facl}, this variant, denoted as FACL, yields only limited improvements across datasets. In contrast, our CBB consistently achieves higher mAP on all benchmarks, highlighting the superior effectiveness of our causal modeling design.
+
+\vspace{4pt}
+\noindent{\textbf{Effect of Basis numbers}:}
+Table~\ref{tab:basis_ratio} presents the results of varying the number of bases used in our CBB module. 
+We adopt DINOv3, SAM, and SD as the backbone networks, train them on Cityscapes, and evaluate on Foggy Cityscapes.
+As discussed in Section~\ref{sec:coefficients_estimation}, the basis matrix is defined as $\mathcal{B} = [b_1, \dots, b_K] \in \mathbb{R}^{K \times C}$ with $K < C$, where a smaller $K$ filters out more redundant information and retains more general representations. In this experiment, we investigate how different VFMs respond to varying basis ratios, where the ratio denotes the proportion of $K$ relative to $C$.
+
+We observe that for the strong backbone DINOv3, using only $12.5\%$ of the original feature dimension yields the best performance, suggesting that a compact basis space effectively captures the essential representations. In contrast, SAM and SD achieve optimal results at higher ratios (around $50\%$–$70\%$), indicating that models with weaker representation capacity need a larger basis set to preserve sufficient feature diversity.
+
+\vspace{4pt}
+\noindent{\textbf{Generalization across Detectors}:}
+Table~\ref{tab:ab_detectors} presents the generalization results of \textbf{\textit{Bridge}} across different object detectors.
+In addition to the anchor-based Faster R-CNN, we further evaluate two representative anchor-free detectors, Sparse R-CNN~\cite{sun2021sparse} and TOOD~\cite{feng2021tood}.
+Consistent improvements are observed when integrating \textbf{\textit{Bridge}} into both frameworks, highlighting the strong generalization ability of \textbf{\textit{Bridge}} across diverse detection frameworks.
+\input{charts/ablation.tex}
+\input{charts/detectors}
+
+\vspace{4pt}
+\noindent{\textbf{Limitation}:}
+In this work, we propose CBB to approximate expectations for formulating the front-door adjustment (Equation~\ref{equ:front_door_adjustment}). However, the complexity of the representation space makes obtaining closed-form solutions intractable~\cite{wang2024vision,yang2021deconfounded}. Consequently, CBB approximates these expectations using the low-rank bases and sample queries, rather than deriving analytical solutions. 
